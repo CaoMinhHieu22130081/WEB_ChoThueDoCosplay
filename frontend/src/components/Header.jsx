@@ -36,6 +36,7 @@ function Header({ onLoginClick, onRegisterClick }) {
           </Link>
         </nav>
 
+        {/* Auth Buttons */}
         <div className="header-auth">
           <button className="auth-btn login-btn" onClick={onLoginClick}>
             Đăng nhập
