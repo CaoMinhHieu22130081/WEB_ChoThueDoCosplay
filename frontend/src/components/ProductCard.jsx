@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './css/ProductCard.css'
+import { Link } from 'react-router-dom'
 
 function ProductCard({ product }) {
   const [isHovering, setIsHovering] = useState(false)
@@ -75,6 +76,10 @@ function ProductCard({ product }) {
           </div>
           <span className="review-count">(128)</span>
         </div>
+
+          <Link to={`/products/${product.id}`} className="card-link">
+              Xem chi tiết →
+          </Link>
 
         {/* Footer */}
         <div className="product-footer">
