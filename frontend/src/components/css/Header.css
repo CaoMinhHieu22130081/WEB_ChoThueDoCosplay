@@ -74,7 +74,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
 }
 
 .nav-link {
@@ -132,6 +132,52 @@
   background: linear-gradient(135deg, #8b47f0 0%, #a840fb 100%) !important;
 }
 
+/* Account Icon */
+.account-icon {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(168, 85, 247, 0.5);
+  transition: var(--transition);
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 12px;
+  background: rgba(124, 58, 237, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.account-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(244, 114, 182, 0.2) 100%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  border-radius: 50%;
+}
+
+.account-icon:hover {
+  background: rgba(124, 58, 237, 0.25);
+  border-color: var(--color-purple-light);
+  transform: scale(1.12);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), inset 0 0 8px rgba(168, 85, 247, 0.2);
+}
+
+.account-icon:hover::before {
+  opacity: 1;
+}
+
+.account-icon.active {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(124, 58, 237, 0.25) 100%);
+  border-color: var(--color-purple-light);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.6), inset 0 0 8px rgba(168, 85, 247, 0.15);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .header-container { padding: 12px 16px; }
@@ -139,4 +185,5 @@
   .logo-emblem { font-size: 20px; }
   .nav-link { padding: 7px 12px; font-size: 12px; }
   .logo-sub { display: none; }
+  .account-icon { width: 36px; height: 36px; font-size: 20px; margin-left: 8px; }
 }

@@ -29,6 +29,11 @@ function Header() {
             Liên Hệ
           </Link>
         </nav>
+
+        {/* Account Icon */}
+        <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">
+          👤
+        </Link>
       </div>
     </header>
   )
