@@ -107,6 +107,8 @@ const normalizedSimpleProducts = simpleProducts.map((p, index) => ({
 }));
 export const products = [...detailedProducts, ...normalizedSimpleProducts];
 
+export const products = PRODUCTS
+
 export function getProducts() {
     return products;
 }
