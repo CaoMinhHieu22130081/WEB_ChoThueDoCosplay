@@ -12,6 +12,8 @@ import Products      from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Profile       from './pages/Profile'
 import MyOrders      from './pages/MyOrders'
+import Schedule      from './pages/Schedule'
+import Revenue       from './pages/Revenue'
 
 function App() {
     const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
@@ -32,6 +34,8 @@ function App() {
                         <Route path="/products/:id"    element={<ProductDetail />} />
                         <Route path="/profile"         element={<Profile />} />
                         <Route path="/orders"          element={<MyOrders />} />
+                        <Route path="/schedule"        element={<Schedule />} />
+                        <Route path="/revenue"         element={<Revenue />} />
                     </Routes>
                 </main>
 

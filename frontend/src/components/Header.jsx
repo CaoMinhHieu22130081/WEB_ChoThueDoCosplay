@@ -25,6 +25,12 @@ function Header({ onLoginClick, onRegisterClick }) {
           <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
             Sản Phẩm
           </Link>
+          <Link to="/schedule" className={`nav-link ${isActive('/schedule') ? 'active' : ''}`}>
+            Lịch Thuê
+          </Link>
+          <Link to="/revenue" className={`nav-link ${isActive('/revenue') ? 'active' : ''}`}>
+            Doanh Thu
+          </Link>
           <Link to="/contact" className="nav-link nav-cta">
             Liên Hệ
           </Link>
