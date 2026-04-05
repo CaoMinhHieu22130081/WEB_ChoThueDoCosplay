@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import './css/Header.css'
 
-function Header({ onLoginClick, onRegisterClick }) {
+function Header() {
   const location = useLocation()
   const isActive = (path) => location.pathname === path
 
@@ -29,16 +29,6 @@ function Header({ onLoginClick, onRegisterClick }) {
             Liên Hệ
           </Link>
         </nav>
-
-          <div className="header-auth">
-              <button className="auth-btn login-btn" onClick={onLoginClick}>
-                  Đăng nhập
-              </button>
-              <button className="auth-btn register-btn" onClick={onRegisterClick}>
-                  Đăng ký
-              </button>
-          </div>
-
 
         {/* Account Icon */}
         <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">

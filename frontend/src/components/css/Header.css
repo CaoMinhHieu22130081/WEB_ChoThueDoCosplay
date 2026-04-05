@@ -131,56 +131,6 @@
   box-shadow: 0 8px 30px rgba(124, 58, 237, 0.65) !important;
   background: linear-gradient(135deg, #8b47f0 0%, #a840fb 100%) !important;
 }
-/* =========================================
-   AUTH BUTTONS (ĐĂNG NHẬP / ĐĂNG KÝ)
-   ========================================= */
-
-.header-auth {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Cài đặt chung kế thừa từ font và transition của project */
-.auth-btn {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    padding: 8px 20px;
-    border-radius: 50px; /* Bo góc viên thuốc giống nav-link */
-    cursor: pointer;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-/* Nút Đăng nhập: Phong cách viền sáng (Ghost Button) */
-.login-btn {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--color-border);
-}
-
-.login-btn:hover {
-    color: var(--color-purple-pale);
-    border-color: var(--color-border-bright);
-    background: rgba(124, 58, 237, 0.1);
-    box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
-}
-
-/* Nút Đăng ký: Phong cách Gradient nổi bật (giống nav-cta nhưng màu hồng/tím đậm hơn) */
-.register-btn {
-    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-
-.register-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(236, 72, 153, 0.6);
-    background: linear-gradient(135deg, #b96bfa 0%, #f462a6 100%);
-}
 
 /* Account Icon */
 .account-icon {
