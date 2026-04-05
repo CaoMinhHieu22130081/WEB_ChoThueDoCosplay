@@ -129,6 +129,8 @@ const PRODUCTS = [
   },
 ]
 
+export const products = PRODUCTS
+
 export function getProducts() {
-  return PRODUCTS
+  return products
 }
