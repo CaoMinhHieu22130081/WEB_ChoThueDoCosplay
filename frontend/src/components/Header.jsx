@@ -36,15 +36,14 @@ function Header({ onLoginClick, onRegisterClick }) {
           </Link>
         </nav>
 
-          <div className="header-auth">
-              <button className="auth-btn login-btn" onClick={onLoginClick}>
-                  Đăng nhập
-              </button>
-              <button className="auth-btn register-btn" onClick={onRegisterClick}>
-                  Đăng ký
-              </button>
-          </div>
-
+        <div className="header-auth">
+          <button className="auth-btn login-btn" onClick={onLoginClick}>
+            Đăng nhập
+          </button>
+          <button className="auth-btn register-btn" onClick={onRegisterClick}>
+            Đăng ký
+          </button>
+        </div>
 
         {/* Account Icon */}
         <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">
