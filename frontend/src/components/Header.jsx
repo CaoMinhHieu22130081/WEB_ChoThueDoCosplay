@@ -50,13 +50,6 @@ function Header({ onLoginClick, onRegisterClick }) {
             <button className="auth-btn register-btn" onClick={onRegisterClick}>
               Đăng ký
             </button>
-    <header className="header">
-      <div className="header-container">
-        <Link to="/" className="logo-wrap">
-          <div className="logo-emblem">✩</div>
-          <div className="logo-text-block">
-            <span className="logo-main">COSPLAY</span>
-            <span className="logo-sub">CHO THUÊ TRANG PHỤC</span>
           </div>
 
           <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">
@@ -64,44 +57,6 @@ function Header({ onLoginClick, onRegisterClick }) {
           </Link>
         </div>
       </header>
-        <nav className="nav">
-          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
-            Trang Chủ
-          </Link>
-          <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
-            Sản Phẩm
-          </Link>
-          <Link to="/schedule" className={`nav-link ${isActive('/schedule') ? 'active' : ''}`}>
-            Lịch Thuê
-          </Link>
-          <Link to="/revenue" className={`nav-link ${isActive('/revenue') ? 'active' : ''}`}>
-            Doanh Thu
-          </Link>
-          <Link to="/reviews" className={`nav-link ${isActive('/reviews') ? 'active' : ''}`}>
-            Đánh Giá
-          </Link>
-          <Link to="/promotions" className={`nav-link ${isActive('/promotions') ? 'active' : ''}`}>
-            Khuyến Mãi
-          </Link>
-          <Link to="/contact" className="nav-link nav-cta">
-            Liên Hệ
-          </Link>
-        </nav>
-
-        <div className="header-auth">
-          <button className="auth-btn login-btn" onClick={onLoginClick}>
-            Đăng nhập
-          </button>
-          <button className="auth-btn register-btn" onClick={onRegisterClick}>
-            Đăng ký
-          </button>
-        </div>
-
-        <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">
-          👤
-        </Link>
-      </div>
-    </header>
   )
 }
 
