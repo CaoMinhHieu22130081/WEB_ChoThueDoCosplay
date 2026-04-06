@@ -1,97 +1,80 @@
-# Cho Thuê Đồ Cosplay - Frontend React
+# Cho Thuê Đồ Cosplay - Frontend
 
-## 📦 Chu Vụ Lập Trình
+Ứng dụng React để quản lý và thuê đồ cosplay.
 
-Đây là ứng dụng frontend React cho nền tảng cho thuê đồ Cosplay.
+## Cấu Trúc Thư Mục
 
-## 🚀 Cài Đặt & Chạy
+```
+frontend/
+├── src/
+│   ├── pages/           # Các trang của ứng dụng
+│   │   ├── Home.jsx
+│   │   ├── Home.css
+│   │   ├── Products.jsx
+│   │   └── Products.css
+│   ├── components/      # Các component tái sử dụng
+│   │   ├── Header.jsx
+│   │   ├── Header.css
+│   │   ├── Footer.jsx
+│   │   ├── Footer.css
+│   │   ├── ProductCard.jsx
+│   │   └── ProductCard.css
+│   ├── styles/          # Global styles
+│   │   └── index.css
+│   ├── data/            # Dữ liệu ứng dụng
+│   │   └── products.js
+│   ├── App.jsx          # Main app component
+│   ├── App.css
+│   └── main.jsx         # Entry point
+├── public/              # Static files
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+```
 
-### 1. Cài Đặt Dependencies
+## Cài Đặt
+
+1. Cài đặt dependencies:
 ```bash
-cd frontend
 npm install
 ```
 
-### 2. Chạy Ứng Dụng Dev
+2. Chạy máy chủ phát triển:
 ```bash
-npm start
+npm run dev
 ```
-Ứng dụng sẽ mở tại `http://localhost:3000`
 
-### 3. Build cho Production
+3. Build cho production:
 ```bash
 npm run build
 ```
 
-## 📁 Cấu Trúc Thư Mục
+## Công Nghệ Sử Dụng
 
-```
-frontend/
-├── public/
-│   └── index.html           # HTML chính
-├── src/
-│   ├── components/          # Các component tái sử dụng
-│   ├── pages/
-│   │   └── DoPage.jsx      # Trang danh sách đồ Cosplay
-│   ├── styles/
-│   │   ├── index.css       # CSS chung
-│   │   ├── App.css         # CSS của App
-│   │   └── pages/
-│   │       └── DoPage.css  # CSS của DoPage
-│   ├── App.jsx             # Component chính
-│   └── index.jsx           # Entry point
-├── package.json            # Cấu hình dự án
-└── .gitignore             # Ignore files cho Git
-```
+- React 18
+- React Router DOM
+- Vite
+- CSS Module (optional)
 
-## 🎨 Các Trang/Routes Hiện Tại
-
-- `/` - Trang chủ
-- `/do` - Danh sách tất cả đồ Cosplay (Page Đồ)
-
-## 🛠️ Công Nghệ Sử Dụng
-
-- **React 18** - UI library
-- **React Router DOM 6** - Routing
-- **Axios** - API calls
-- **CSS3** - Styling
-
-## 📝 Ghi Chú Phát Triển
+## Cách Sử Dụng
 
 ### Thêm Page Mới
-1. Tạo file `.jsx` mới trong `src/pages/`
-2. Thêm import trong `App.jsx`
-3. Thêm route mới
-4. Tạo CSS file tương ứng trong `src/styles/pages/`
+
+1. Tạo file JSX trong `src/pages/`
+2. Tạo file CSS cùng tên
+3. Import vào `App.jsx` và thêm route
 
 ### Thêm Component
-1. Tạo file `.jsx` mới trong `src/components/`
-2. Import và sử dụng trong pages hoặc App
 
-### Kết Nối Backend
-Hiện tại sử dụng mock data. Để kết nối thực tế:
-1. Cài Axios (đã có trong package.json)
-2. Tạo folder `src/api/` và file `api.js`
-3. Thay thế mock data bằng API calls
+1. Tạo file JSX trong `src/components/`
+2. Tạo file CSS cùng tên
+3. Import và sử dụng trong pages
 
-## 🧪 Tính Năng Hiện Tại
+### Thêm Dữ Liệu
 
-✅ Navbar với routing
-✅ Hero section trên Trang chủ
-✅ Danh sách sản phẩm (Đồ) với lọc theo danh mục
-✅ Hiển thị thông tin sản phẩm (giá thuê, tiền cọc, đánh giá)
-✅ Responsive design cho mobile
+Thêm file dữ liệu trong `src/data/` và export hàm để lấy dữ liệu.
 
-## 🔜 Tính Năng Sắp Tới
+## Liên Hệ
 
-- [ ] Authentication/Login
-- [ ] Shopping Cart
-- [ ] Product Detail Page
-- [ ] Checkout
-- [ ] User Profile
-- [ ] Admin Dashboard
-- [ ] Search functionality
-
-## 📞 Liên Hệ & Support
-
-Nếu có vấn đề, liên hệ với team phát triển.
+Email: info@cosplay.vn

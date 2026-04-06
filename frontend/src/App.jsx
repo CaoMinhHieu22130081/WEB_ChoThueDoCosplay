@@ -1,49 +1,52 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import DoPage from './pages/DoPage';
-import './styles/App.css';
+import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import './App.css'
+
+import Header from './components/Header'
+import Footer from './components/Footer'
+import AuthModal from './components/AuthModal'
+
+import Home from './pages/Home'
+import Products from './pages/Products'
+import ProductDetail from './pages/ProductDetail'
+import Profile from './pages/Profile'
+import MyOrders from './pages/MyOrders'
+import Schedule from './pages/Schedule'
+import Revenue from './pages/Revenue'
 
 function App() {
+  const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
+
+  const openLogin = () => setAuthModal({ open: true, tab: 'login' })
+  const openRegister = () => setAuthModal({ open: true, tab: 'register' })
+  const closeAuth = () => setAuthModal((prev) => ({ ...prev, open: false }))
+
   return (
     <Router>
-      <div className="app-container">
-        <nav className="navbar">
-          <div className="navbar-header">
-            <h1 className="navbar-title">🎭 Cho Thuê Đồ Cosplay</h1>
-          </div>
-          <ul className="nav-links">
-            <li><Link to="/">Trang Chủ</Link></li>
-            <li><Link to="/do">Tất Cả Đồ</Link></li>
-            <li><Link to="/giohang">Giỏ Hàng</Link></li>
-            <li><Link to="/profile">Tài Khoản</Link></li>
-          </ul>
-        </nav>
+      <div className="app">
+        <Header onLoginClick={openLogin} onRegisterClick={openRegister} />
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/do" element={<DoPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<MyOrders />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/revenue" element={<Revenue />} />
           </Routes>
         </main>
 
-        <footer className="footer">
-          <p>&copy; 2024 Cho Thuê Đồ Cosplay. Tất cả quyền được bảo lưu.</p>
-        </footer>
+        <Footer />
+        <AuthModal
+          isOpen={authModal.open}
+          onClose={closeAuth}
+          defaultTab={authModal.tab}
+        />
       </div>
     </Router>
-  );
+  )
 }
 
-function HomePage() {
-  return (
-    <div className="home-page">
-      <section className="hero">
-        <h2>Chào mừng đến với Cho Thuê Đồ Cosplay</h2>
-        <p>Tìm kiếm và thuê những bộ đồ Cosplay chất lượng cao từ bộ sưu tập của chúng tôi</p>
-        <Link to="/do" className="btn btn-primary">Khám Phá Đồ</Link>
-      </section>
-    </div>
-  );
-}
-
-export default App;
+export default App
