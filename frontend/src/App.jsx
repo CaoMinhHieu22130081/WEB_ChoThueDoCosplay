@@ -54,6 +54,32 @@ function App() {
           />
         </div>
       </Router>
+    <Router>
+      <div className="app">
+        <Header onLoginClick={openLogin} onRegisterClick={openRegister} />
+
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+                <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<MyOrders />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/revenue" element={<Revenue />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/promotions" element={<Promotions />} />
+          </Routes>
+        </main>
+
+        <Footer />
+        <AuthModal
+          isOpen={authModal.open}
+          onClose={closeAuth}
+          defaultTab={authModal.tab}
+        />
+      </div>
+    </Router>
   )
 }
 
