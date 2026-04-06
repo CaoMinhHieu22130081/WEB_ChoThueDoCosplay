@@ -17,6 +17,8 @@ import Reviews from './pages/Reviews'
 import Promotions from './pages/Promotions'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
+import AddProduct from './pages/AddProduct'
+import ManageInventory from './pages/ManageInventory'
 
 function App() {
   const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
@@ -43,6 +45,8 @@ function App() {
               <Route path="/promotions" element={<Promotions />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/manage-inventory" element={<ManageInventory />} />
             </Routes>
           </main>
 

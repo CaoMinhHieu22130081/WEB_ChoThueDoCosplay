@@ -20,6 +20,12 @@ function Header({ onLoginClick, onRegisterClick }) {
             <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
               Trang Chủ
             </Link>
+            <Link to="/add-product" className={`nav-link ${isActive('/add-product') ? 'active' : ''}`}>
+              Đăng Trang Phục
+            </Link>
+            <Link to="/manage-inventory" className={`nav-link ${isActive('/manage-inventory') ? 'active' : ''}`}>
+              Quản Lý Kho
+            </Link>
             <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
               Sản Phẩm
             </Link>
