@@ -13,6 +13,7 @@ import Profile from './pages/Profile'
 import MyOrders from './pages/MyOrders'
 import Schedule from './pages/Schedule'
 import Revenue from './pages/Revenue'
+import Contact from './pages/Contact'
 
 function App() {
   const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
@@ -35,6 +36,7 @@ function App() {
             <Route path="/orders" element={<MyOrders />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/revenue" element={<Revenue />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
 
