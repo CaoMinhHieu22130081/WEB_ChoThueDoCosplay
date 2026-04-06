@@ -14,6 +14,12 @@ import MyOrders from './pages/MyOrders'
 import Schedule from './pages/Schedule'
 import Revenue from './pages/Revenue'
 import Contact from './pages/Contact'
+import Reviews from './pages/Reviews'
+import Promotions from './pages/Promotions'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import AddProduct from './pages/AddProduct'
+import ManageInventory from './pages/ManageInventory'
 
 function App() {
   const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
@@ -23,31 +29,37 @@ function App() {
   const closeAuth = () => setAuthModal((prev) => ({ ...prev, open: false }))
 
   return (
-    <Router>
-      <div className="app">
-        <Header onLoginClick={openLogin} onRegisterClick={openRegister} />
+      <Router>
+        <div className="app">
+          <Header onLoginClick={openLogin} onRegisterClick={openRegister} />
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/orders" element={<MyOrders />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/revenue" element={<Revenue />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/orders" element={<MyOrders />} />
+              <Route path="/schedule" element={<Schedule />} />
+              <Route path="/revenue" element={<Revenue />} />
+              <Route path="/contact" element={<Contact />} />  
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/promotions" element={<Promotions />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/manage-inventory" element={<ManageInventory />} />
+            </Routes>
+          </main>
 
-        <Footer />
-        <AuthModal
-          isOpen={authModal.open}
-          onClose={closeAuth}
-          defaultTab={authModal.tab}
-        />
-      </div>
-    </Router>
+          <Footer />
+          <AuthModal
+              isOpen={authModal.open}
+              onClose={closeAuth}
+              defaultTab={authModal.tab}
+          />
+        </div>
+      </Router>
   )
 }
 
