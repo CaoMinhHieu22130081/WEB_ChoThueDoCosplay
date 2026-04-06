@@ -13,6 +13,8 @@ import Profile from './pages/Profile'
 import MyOrders from './pages/MyOrders'
 import Schedule from './pages/Schedule'
 import Revenue from './pages/Revenue'
+import Reviews from './pages/Reviews'
+import Promotions from './pages/Promotions'
 
 function App() {
   const [authModal, setAuthModal] = useState({ open: false, tab: 'login' })
@@ -29,12 +31,14 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
+                <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<MyOrders />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/revenue" element={<Revenue />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/promotions" element={<Promotions />} />
           </Routes>
         </main>
 

@@ -8,16 +8,14 @@ function Header({ onLoginClick, onRegisterClick }) {
   return (
     <header className="header">
       <div className="header-container">
-        {/* Logo */}
         <Link to="/" className="logo-wrap">
-          <div className="logo-emblem">⛩</div>
+          <div className="logo-emblem">✩</div>
           <div className="logo-text-block">
             <span className="logo-main">COSPLAY</span>
             <span className="logo-sub">CHO THUÊ TRANG PHỤC</span>
           </div>
         </Link>
 
-        {/* Nav */}
         <nav className="nav">
           <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
             Trang Chủ
@@ -31,12 +29,17 @@ function Header({ onLoginClick, onRegisterClick }) {
           <Link to="/revenue" className={`nav-link ${isActive('/revenue') ? 'active' : ''}`}>
             Doanh Thu
           </Link>
+          <Link to="/reviews" className={`nav-link ${isActive('/reviews') ? 'active' : ''}`}>
+            Đánh Giá
+          </Link>
+          <Link to="/promotions" className={`nav-link ${isActive('/promotions') ? 'active' : ''}`}>
+            Khuyến Mãi
+          </Link>
           <Link to="/contact" className="nav-link nav-cta">
             Liên Hệ
           </Link>
         </nav>
 
-        {/* Auth Buttons */}
         <div className="header-auth">
           <button className="auth-btn login-btn" onClick={onLoginClick}>
             Đăng nhập
@@ -46,7 +49,6 @@ function Header({ onLoginClick, onRegisterClick }) {
           </button>
         </div>
 
-        {/* Account Icon */}
         <Link to="/profile" className={`account-icon ${isActive('/profile') ? 'active' : ''}`} title="Tài khoản">
           👤
         </Link>
