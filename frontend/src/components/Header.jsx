@@ -25,6 +25,9 @@ function Header() {
           <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
             Sản Phẩm
           </Link>
+          <Link to="/cart" className={`nav-link ${isActive('/cart') ? 'active' : ''}`}>
+            Giỏ Hàng
+          </Link>
           <Link to="/contact" className="nav-link nav-cta">
             Liên Hệ
           </Link>
