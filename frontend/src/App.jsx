@@ -13,6 +13,7 @@ import Profile from './pages/Profile'
 import MyOrders from './pages/MyOrders'
 import Schedule from './pages/Schedule'
 import Revenue from './pages/Revenue'
+import Contact from './pages/Contact'
 import Reviews from './pages/Reviews'
 import Promotions from './pages/Promotions'
 import Cart from './pages/Cart'
@@ -41,6 +42,7 @@ function App() {
               <Route path="/orders" element={<MyOrders />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route path="/revenue" element={<Revenue />} />
+              <Route path="/contact" element={<Contact />} />  
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/promotions" element={<Promotions />} />
               <Route path="/cart" element={<Cart />} />
