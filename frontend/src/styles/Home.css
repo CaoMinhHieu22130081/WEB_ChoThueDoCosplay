@@ -172,6 +172,29 @@
   transform: translateY(-2px);
 }
 
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 6, 32, 0.8);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  backdrop-filter: blur(8px);
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(15, 6, 32, 0.95);
+  border-color: var(--color-border-bright);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
 /* Stats */
 .hero-stats {
   display: flex;
@@ -365,5 +388,5 @@
 
 @media (max-width: 480px) {
   .hero-actions { flex-direction: column; width: 100%; }
-  .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
+  .btn-hero-primary, .btn-hero-outline, .btn-hero-secondary { width: 100%; justify-content: center; }
 }
