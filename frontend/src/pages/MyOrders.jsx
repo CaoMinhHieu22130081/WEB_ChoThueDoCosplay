@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDemoStore } from '../context/DemoStore'
 import '../styles/MyOrders.css'
 
 /* ---- Mock Data ---- */
@@ -95,10 +96,14 @@ const HISTORY_ORDERS = [
 
 /* ---- Status colors ---- */
 const STATUS_COLORS = {
-  'Đang thuê': { bg: 'rgba(34,197,94,0.12)', color: '#4ade80', border: 'rgba(34,197,94,0.3)' },
-  'Chờ trả': { bg: 'rgba(251,191,36,0.12)', color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
-  'Hoàn thành': { bg: 'rgba(168,85,247,0.12)', color: '#c084fc', border: 'rgba(168,85,247,0.3)' },
-  'Đã hủy': { bg: 'rgba(239,68,68,0.1)', color: '#f87171', border: 'rgba(239,68,68,0.25)' },
+  'Chờ xác nhận':  { bg: 'rgba(251,191,36,0.12)',  color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
+  'Đã xác nhận':   { bg: 'rgba(96,165,250,0.12)',  color: '#93c5fd', border: 'rgba(96,165,250,0.3)' },
+  'Đang thuê':     { bg: 'rgba(34,197,94,0.12)',   color: '#4ade80', border: 'rgba(34,197,94,0.3)' },
+  'Chờ trả':       { bg: 'rgba(251,191,36,0.12)',  color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
+  'Chờ trả đồ':    { bg: 'rgba(251,191,36,0.12)',  color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
+  'Hoàn thành':    { bg: 'rgba(168,85,247,0.12)',  color: '#c084fc', border: 'rgba(168,85,247,0.3)' },
+  'Đã từ chối':    { bg: 'rgba(239,68,68,0.1)',    color: '#f87171', border: 'rgba(239,68,68,0.25)' },
+  'Đã hủy':        { bg: 'rgba(239,68,68,0.1)',    color: '#f87171', border: 'rgba(239,68,68,0.25)' },
 }
 
 /* ---- Star Rating ---- */
@@ -331,11 +336,20 @@ function HistoryOrderCard({ order, onReview }) {
 
 /* ===== MAIN PAGE ===== */
 function MyOrders() {
+  const { orders: contextOrders } = useDemoStore()
   const [activeTab, setActiveTab] = useState('active')
   const [history, setHistory] = useState(HISTORY_ORDERS)
   const [reviewModal, setReviewModal] = useState(null)
   const [extendModal, setExtendModal] = useState(null)
   const [cancelModal, setCancelModal] = useState(null)
+
+  /* Merge context orders vào danh sách hiển thị */
+  const activeStatusKeys = ['pending_confirm', 'confirmed', 'active', 'waiting_return', 'pending_return']
+  const contextActive = contextOrders.filter(o => activeStatusKeys.includes(o.statusKey))
+  const allActive = [
+    ...contextActive,
+    ...ACTIVE_ORDERS.filter(o => !contextOrders.find(c => c.id === o.id)),
+  ]
 
   const handleReviewSubmit = (orderId, review) => {
     setHistory(prev => prev.map(o => o.id === orderId ? { ...o, reviewed: true, review } : o))
@@ -359,8 +373,8 @@ function MyOrders() {
       {/* Summary Bar */}
       <div className="orders-summary-bar">
         <div className="summary-item">
-          <span className="summary-num">{ACTIVE_ORDERS.length}</span>
-          <span className="summary-label">Đang thuê</span>
+          <span className="summary-num">{allActive.length}</span>
+          <span className="summary-label">Đang xử lý</span>
         </div>
         <div className="summary-divider" />
         <div className="summary-item">
@@ -381,8 +395,8 @@ function MyOrders() {
           onClick={() => setActiveTab('active')}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Đang Thuê
-          <span className="tab-count">{ACTIVE_ORDERS.length}</span>
+          Đang Xử Lý
+          <span className="tab-count">{allActive.length}</span>
         </button>
         <button
           className={`orders-tab ${activeTab === 'history' ? 'active' : ''}`}
@@ -398,14 +412,14 @@ function MyOrders() {
       <div className="orders-content">
         {activeTab === 'active' && (
           <div className="orders-grid">
-            {ACTIVE_ORDERS.length === 0 ? (
+            {allActive.length === 0 ? (
               <div className="empty-state">
                 <div className="empty-icon">👘</div>
                 <h3 className="empty-title">Bạn chưa có đơn thuê nào</h3>
                 <p className="empty-desc">Khám phá kho trang phục cosplay của chúng tôi</p>
                 <a href="/products" className="btn-browse">Xem trang phục</a>
               </div>
-            ) : ACTIVE_ORDERS.map(order => (
+            ) : allActive.map(order => (
               <ActiveOrderCard
                 key={order.id}
                 order={order}

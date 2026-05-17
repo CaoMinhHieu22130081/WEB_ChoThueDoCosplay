@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
 import { getProducts } from '../data/products'
+import { useDemoStore } from '../context/DemoStore'
 import '../styles/ManageInventory.css'
 
 const STATUS_OPTIONS = [
@@ -12,18 +13,17 @@ const STATUS_OPTIONS = [
 ]
 
 function ManageInventory() {
+  const { sellerProducts } = useDemoStore()
   const [products, setProducts] = useState([])
   const [editingId, setEditingId] = useState(null)
   const [editData, setEditData] = useState({ quantity: '', status: '' })
 
-  // Load products
   useEffect(() => {
     const data = getProducts()
-    // Add quantity and status for demo (normally from backend)
-    const productsWithInventory = data.map(p => ({
+    const productsWithInventory = data.map((p, i) => ({
       ...p,
-      quantity: Math.floor(Math.random() * 10) + 1,
-      status: 'available'
+      quantity: (i % 3) + 1,
+      status: 'available',
     }))
     setProducts(productsWithInventory)
   }, [])
@@ -66,6 +66,57 @@ function ManageInventory() {
           + Thêm Sản Phẩm Mới
         </Link>
       </header>
+
+      {/* ═════ SẢN PHẨM VỪA ĐĂNG (từ context) ═════ */}
+      {sellerProducts.length > 0 && (
+        <div className="new-products-section">
+          <div className="new-products-header">
+            <span className="new-products-badge">Mới đăng · {sellerProducts.length}</span>
+            <h2 className="new-products-title">Trang phục vừa được đăng</h2>
+          </div>
+          <div className="new-products-grid">
+            {sellerProducts.map(p => (
+              <div key={p.id} className="new-product-card">
+                {p.image ? (
+                  <div className="new-product-img-wrap">
+                    <img src={p.image} alt={p.name} className="new-product-img"
+                      onError={e => { e.target.style.display = 'none' }} />
+                    <span className="new-product-label">Mới đăng</span>
+                  </div>
+                ) : (
+                  <div className="new-product-img-placeholder">
+                    <span>📷</span>
+                    <span className="new-product-label">Mới đăng</span>
+                  </div>
+                )}
+                <div className="new-product-info">
+                  <h3 className="new-product-name">{p.name}</h3>
+                  <div className="new-product-meta">
+                    {p.sizes?.length > 0 && <span>Size: {p.sizes.join(', ')}</span>}
+                    <span>{Number(p.rentalPrice).toLocaleString('vi-VN')}đ/ngày</span>
+                    <span>Cọc: {Number(p.deposit).toLocaleString('vi-VN')}đ</span>
+                  </div>
+                  {p.accessories?.length > 0 && (
+                    <div className="new-product-accessories">
+                      <span className="acc-label">Phụ kiện:</span>
+                      {p.accessories.map((a, i) => (
+                        <span key={i} className="acc-chip">{a}</span>
+                      ))}
+                    </div>
+                  )}
+                  {p.allowWarranty && (
+                    <span className="new-product-warranty">🛡️ Hỗ trợ bảo hành</span>
+                  )}
+                  <div className="new-product-status">
+                    <span className="status available">Có sẵn</span>
+                    <span className="new-product-qty">SL: 1</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ═════ INVENTORY LIST ═════ */}
       <div className="inventory-list">
