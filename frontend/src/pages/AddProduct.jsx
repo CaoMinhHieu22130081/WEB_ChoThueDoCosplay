@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useDemoStore } from '../context/DemoStore'
 import '../styles/AddProduct.css'
 
 const CATEGORIES = [
@@ -9,38 +11,129 @@ const CATEGORIES = [
   { key: 'japan', label: 'Nhật Bản' },
 ]
 
+const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Tùy chỉnh']
+
+const WARRANTY_TIERS = [
+  { label: 'Cơ bản', price: '30.000đ', desc: 'Bảo vệ vết bẩn nhẹ, sờn vải. Hoàn tối đa 80% cọc.' },
+  { label: 'Tiêu chuẩn', price: '60.000đ', desc: 'Cơ bản + rách nhỏ, mất phụ kiện đơn lẻ. Hoàn tối đa 90% cọc.' },
+  { label: 'Cao cấp', price: '100.000đ', desc: 'Toàn diện. Hoàn 100% cọc với mọi hư hỏng thông thường.' },
+]
+
+const SPEC_FIELDS = [
+  { key: 'material', label: 'Chất liệu', placeholder: 'VD: Lụa nhân tạo + cotton' },
+  { key: 'color', label: 'Màu sắc', placeholder: 'VD: Đỏ, đen, vàng' },
+  { key: 'pieces', label: 'Bộ gồm', placeholder: 'VD: 4 món' },
+  { key: 'origin', label: 'Xuất xứ', placeholder: 'VD: Việt Nam (may thủ công)' },
+  { key: 'suitable', label: 'Phù hợp', placeholder: 'VD: Nữ, cao 155–170cm' },
+]
+
 function AddProduct() {
+  const { addProduct } = useDemoStore()
+  const [addedProduct, setAddedProduct] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     category: '',
     image: '',
     rentalPrice: '',
-    deposit: ''
+    deposit: '',
   })
+
+  const [selectedSizes, setSelectedSizes] = useState([])
+  const [accessories, setAccessories] = useState([''])
+  const [specs, setSpecs] = useState({ material: '', color: '', pieces: '', origin: '', suitable: '' })
+  const [allowWarranty, setAllowWarranty] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const toggleSize = (size) => {
+    setSelectedSizes(prev =>
+      prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]
+    )
+  }
+
+  const handleAccessoryChange = (index, value) => {
+    setAccessories(prev => prev.map((a, i) => (i === index ? value : a)))
+  }
+
+  const addAccessory = () => setAccessories(prev => [...prev, ''])
+
+  const removeAccessory = (index) => {
+    setAccessories(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const handleSpecChange = (key, value) => {
+    setSpecs(prev => ({ ...prev, [key]: value }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // TODO: Submit to backend
-    console.log('Submitting product:', formData)
-    alert('Sản phẩm đã được đăng thành công!')
-    // Reset form
-    setFormData({
-      name: '',
-      description: '',
-      category: '',
-      image: '',
-      rentalPrice: '',
-      deposit: ''
-    })
+    const product = {
+      ...formData,
+      sizes: selectedSizes,
+      accessories: accessories.filter(a => a.trim() !== ''),
+      specs,
+      allowWarranty,
+    }
+    addProduct(product)
+    setAddedProduct(product)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleAddMore = () => {
+    setAddedProduct(null)
+    setFormData({ name: '', description: '', category: '', image: '', rentalPrice: '', deposit: '' })
+    setSelectedSizes([])
+    setAccessories([''])
+    setSpecs({ material: '', color: '', pieces: '', origin: '', suitable: '' })
+    setAllowWarranty(false)
+  }
+
+  /* ── Màn xác nhận sau khi đăng thành công ── */
+  if (addedProduct) {
+    const WARRANTY_TIER_LABEL = { basic: 'Cơ bản', standard: 'Tiêu chuẩn', premium: 'Cao cấp' }
+    return (
+      <div className="add-product-page">
+        <div className="ap-done-screen">
+          <div className="ap-done-icon">✓</div>
+          <h1 className="ap-done-title">Đăng trang phục thành công!</h1>
+          <p className="ap-done-sub">Sản phẩm đã được thêm vào kho và hiển thị trong Quản lý kho.</p>
+
+          <div className="ap-done-card">
+            {addedProduct.image && (
+              <img src={addedProduct.image} alt={addedProduct.name} className="ap-done-img"
+                onError={e => { e.target.style.display = 'none' }} />
+            )}
+            <div className="ap-done-info">
+              <h2 className="ap-done-name">{addedProduct.name}</h2>
+              <div className="ap-done-meta">
+                <span>{CATEGORIES.find(c => c.key === addedProduct.category)?.label ?? addedProduct.category}</span>
+                {addedProduct.sizes?.length > 0 && <span>Size: {addedProduct.sizes.join(', ')}</span>}
+                <span>{Number(addedProduct.rentalPrice).toLocaleString('vi-VN')}đ/ngày</span>
+                <span>Cọc: {Number(addedProduct.deposit).toLocaleString('vi-VN')}đ</span>
+              </div>
+              {addedProduct.accessories?.length > 0 && (
+                <div className="ap-done-accessories">
+                  <span className="ap-done-section-label">Phụ kiện:</span>
+                  <span>{addedProduct.accessories.join(' · ')}</span>
+                </div>
+              )}
+              {addedProduct.allowWarranty && (
+                <div className="ap-done-warranty">🛡️ Hỗ trợ gói bảo hành (Cơ bản / Tiêu chuẩn / Cao cấp)</div>
+              )}
+            </div>
+          </div>
+
+          <div className="ap-done-actions">
+            <Link to="/seller/manage-inventory" className="btn-ap-done-primary">Xem kho trang phục →</Link>
+            <button className="btn-ap-done-secondary" onClick={handleAddMore}>+ Đăng thêm trang phục</button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -56,89 +149,217 @@ function AddProduct() {
 
       {/* ═════ FORM ═════ */}
       <form onSubmit={handleSubmit} className="add-product-form">
-        <div className="form-group">
-          <label htmlFor="name">Tên Sản Phẩm *</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Ví dụ: Naruto - Uzumaki Naruto"
-            required
-          />
+
+        {/* ── Thông tin cơ bản ── */}
+        <div className="ap-section">
+          <h2 className="ap-section-title">Thông tin cơ bản</h2>
+
+          <div className="form-group">
+            <label htmlFor="name">Tên Sản Phẩm *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="VD: Naruto - Uzumaki Naruto"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="description">Mô tả</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Mô tả chi tiết về trang phục, phong cách, nguồn gốc nhân vật..."
+              rows="4"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="category">Danh Mục *</label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Chọn danh mục</option>
+              {CATEGORIES.map(cat => (
+                <option key={cat.key} value={cat.key}>{cat.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="image">Hình Ảnh (URL)</label>
+            <input
+              type="url"
+              id="image"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              placeholder="https://example.com/image.jpg"
+            />
+            {formData.image && (
+              <div className="ap-image-preview">
+                <img src={formData.image} alt="Preview" onError={e => { e.target.style.display = 'none' }} />
+              </div>
+            )}
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="rentalPrice">Giá Thuê (VNĐ/ngày) *</label>
+              <input
+                type="number"
+                id="rentalPrice"
+                name="rentalPrice"
+                value={formData.rentalPrice}
+                onChange={handleChange}
+                placeholder="50000"
+                min="0"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="deposit">Tiền Cọc (VNĐ) *</label>
+              <input
+                type="number"
+                id="deposit"
+                name="deposit"
+                value={formData.deposit}
+                onChange={handleChange}
+                placeholder="200000"
+                min="0"
+                required
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="description">Mô tả</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Mô tả chi tiết về trang phục, kích cỡ, chất liệu..."
-            rows="4"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="category">Danh Mục *</label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Chọn danh mục</option>
-            {CATEGORIES.map(cat => (
-              <option key={cat.key} value={cat.key}>{cat.label}</option>
+        {/* ── Size ── */}
+        <div className="ap-section">
+          <h2 className="ap-section-title">Kích thước có sẵn</h2>
+          <p className="ap-section-desc">Chọn các size mà trang phục này hỗ trợ.</p>
+          <div className="size-grid">
+            {SIZE_OPTIONS.map(size => (
+              <button
+                key={size}
+                type="button"
+                className={`size-chip ${selectedSizes.includes(size) ? 'size-chip--active' : ''}`}
+                onClick={() => toggleSize(size)}
+              >
+                {size}
+              </button>
             ))}
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="image">Hình Ảnh (URL)</label>
-          <input
-            type="url"
-            id="image"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            placeholder="https://example.com/image.jpg"
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="rentalPrice">Giá Thuê (VNĐ/ngày) *</label>
-            <input
-              type="number"
-              id="rentalPrice"
-              name="rentalPrice"
-              value={formData.rentalPrice}
-              onChange={handleChange}
-              placeholder="50000"
-              min="0"
-              required
-            />
           </div>
+          {selectedSizes.length > 0 && (
+            <p className="ap-selected-hint">Đã chọn: {selectedSizes.join(', ')}</p>
+          )}
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="deposit">Tiền Cọc (VNĐ) *</label>
-            <input
-              type="number"
-              id="deposit"
-              name="deposit"
-              value={formData.deposit}
-              onChange={handleChange}
-              placeholder="200000"
-              min="0"
-              required
-            />
+        {/* ── Thông số kỹ thuật ── */}
+        <div className="ap-section">
+          <h2 className="ap-section-title">Thông số kỹ thuật</h2>
+          <p className="ap-section-desc">Giúp khách hàng hiểu rõ hơn về chất liệu và đặc điểm sản phẩm.</p>
+          <div className="specs-grid">
+            {SPEC_FIELDS.map(field => (
+              <div className="form-group" key={field.key}>
+                <label>{field.label}</label>
+                <input
+                  type="text"
+                  value={specs[field.key]}
+                  onChange={(e) => handleSpecChange(field.key, e.target.value)}
+                  placeholder={field.placeholder}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* ── Phụ kiện ── */}
+        <div className="ap-section">
+          <h2 className="ap-section-title">Phụ kiện đi kèm</h2>
+          <p className="ap-section-desc">Liệt kê các phụ kiện bao gồm trong bộ cho thuê (VD: kiếm, mũ, đai lưng...).</p>
+          <div className="accessories-list">
+            {accessories.map((acc, index) => (
+              <div key={index} className="accessory-row">
+                <input
+                  type="text"
+                  value={acc}
+                  onChange={(e) => handleAccessoryChange(index, e.target.value)}
+                  placeholder={`Phụ kiện ${index + 1} — VD: Kiếm gỗ, Mũ ninja...`}
+                />
+                {accessories.length > 1 && (
+                  <button
+                    type="button"
+                    className="btn-remove-acc"
+                    onClick={() => removeAccessory(index)}
+                    title="Xóa phụ kiện này"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+          <button type="button" className="btn-add-acc" onClick={addAccessory}>
+            + Thêm phụ kiện
+          </button>
+        </div>
+
+        {/* ── Gói bảo hành ── */}
+        <div className="ap-section">
+          <h2 className="ap-section-title">Gói bảo hành cho thuê</h2>
+          <p className="ap-section-desc">
+            Bật để cho phép khách hàng mua gói bảo hành khi đặt thuê trang phục của bạn.
+            Phí bảo hành do khách trả — giúp họ yên tâm hơn và tăng tỷ lệ chốt đơn.
+          </p>
+
+          {/* Toggle */}
+          <div className="warranty-toggle-row">
+            <div>
+              <p className="warranty-toggle-label">
+                {allowWarranty ? 'Đang cho phép bảo hành' : 'Chưa cho phép bảo hành'}
+              </p>
+              <p className="warranty-toggle-sub">
+                {allowWarranty
+                  ? 'Khách có thể chọn 1 trong 3 gói khi đặt thuê.'
+                  : 'Khách tự chịu trách nhiệm nếu hư hỏng.'}
+              </p>
+            </div>
+            <button
+              type="button"
+              className={`warranty-switch ${allowWarranty ? 'warranty-switch--on' : ''}`}
+              onClick={() => setAllowWarranty(v => !v)}
+              aria-label="Bật/tắt bảo hành"
+            >
+              <span className="warranty-switch-thumb" />
+            </button>
+          </div>
+
+          {/* Bảng gói nếu bật */}
+          {allowWarranty && (
+            <div className="warranty-info-grid">
+              {WARRANTY_TIERS.map(tier => (
+                <div key={tier.label} className="warranty-info-card">
+                  <div className="warranty-info-top">
+                    <span className="warranty-info-name">{tier.label}</span>
+                    <span className="warranty-info-price">{tier.price} / lần</span>
+                  </div>
+                  <p className="warranty-info-desc">{tier.desc}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ── Submit ── */}
         <button type="submit" className="btn-submit">
           Đăng Trang Phục Cho Thuê
         </button>

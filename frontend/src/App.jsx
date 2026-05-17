@@ -73,9 +73,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 
 import AuthModal from './components/AuthModal'
+import { DemoProvider } from './context/DemoStore'
 
 import UserLayout from './layout/UserLayout'
 import AdminLayout from './layout/AdminLayout'
+import SellerLayout from './layout/SellerLayout'
 
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -101,6 +103,7 @@ function App() {
   const closeAuth = () => setAuthModal((prev) => ({ ...prev, open: false }))
 
   return (
+    <DemoProvider>
     <Router>
       <Routes>
         {/* WEB USER */}
@@ -124,8 +127,15 @@ function App() {
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/manage-inventory" element={<ManageInventory />} />
+        </Route>
+
+        {/* WEB SELLER RIÊNG */}
+        <Route path="/seller" element={<SellerLayout />}>
+          <Route path="add-product" element={<AddProduct />} />
+          <Route path="manage-inventory" element={<ManageInventory />} />
+          <Route path="schedule" element={<Schedule />} />
+          <Route path="revenue" element={<Revenue />} />
+          <Route path="reviews" element={<Reviews />} />
         </Route>
 
         {/* WEB ADMIN RIÊNG */}
@@ -144,6 +154,7 @@ function App() {
         defaultTab={authModal.tab}
       />
     </Router>
+    </DemoProvider>
   )
 }
 

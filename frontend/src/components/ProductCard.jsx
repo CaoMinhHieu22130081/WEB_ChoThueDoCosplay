@@ -169,12 +169,12 @@ function ProductCard({ product }) {
             </span>
           </div>
 
-          <button className="btn-rent">
+          <Link to={`/products/${product.id}`} className="btn-rent">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M9 11l3 3L22 4" />
             </svg>
             <span>Thuê Ngay</span>
-          </button>
+          </Link>
         </div>
       </div>
     </article>

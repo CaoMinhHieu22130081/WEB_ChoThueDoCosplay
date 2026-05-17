@@ -8,7 +8,6 @@ function Header({ onLoginClick, onRegisterClick }) {
   const isActive = (path) => location.pathname === path
 
   const menuItems = [
-    { label: 'Lịch Thuê', path: '/schedule' },
     { label: 'Doanh Thu', path: '/revenue' },
     { label: 'Đánh Giá', path: '/reviews' },
     { label: 'Khuyến Mãi', path: '/promotions' }
@@ -28,12 +27,6 @@ function Header({ onLoginClick, onRegisterClick }) {
             </Link>
             <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
               Sản Phẩm
-            </Link>
-            <Link to="/add-product" className={`nav-link ${isActive('/add-product') ? 'active' : ''}`}>
-              Đăng Trang Phục
-            </Link>
-            <Link to="/manage-inventory" className={`nav-link ${isActive('/manage-inventory') ? 'active' : ''}`}>
-              Quản Lý Kho
             </Link>
             <Link to="/cart" className={`nav-link ${isActive('/cart') ? 'active' : ''}`}>
               Giỏ Hàng

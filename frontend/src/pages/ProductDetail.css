@@ -388,17 +388,100 @@
     margin-top: -4px;
 }
 
+/* ── Warranty picker ── */
+.pd-warranty-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.pd-warranty-btn {
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    background: rgba(15, 6, 32, 0.5);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--font-body);
+}
+
+.pd-warranty-btn:hover:not(.active) {
+    border-color: var(--color-border-bright);
+    background: rgba(124, 58, 237, 0.05);
+}
+
+.pd-warranty-btn.active {
+    border-color: var(--color-purple);
+    background: rgba(124, 58, 237, 0.14);
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+.pd-warranty-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+}
+
+.pd-warranty-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.pd-warranty-fee {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-gold);
+    white-space: nowrap;
+}
+
+.pd-warranty-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
 /* Summary bar */
 .pd-summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 12px 16px;
     background: rgba(124, 58, 237, 0.1);
     border: 1px solid var(--color-border-bright);
     border-radius: var(--radius);
     font-size: 14px;
     color: var(--text-secondary);
+}
+
+.pd-summary-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pd-summary-warranty {
+    font-size: 12px;
+    color: var(--color-purple-pale);
+}
+
+.pd-summary-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.pd-summary-breakdown {
+    font-size: 11px;
+    color: var(--text-muted);
 }
 
 .pd-summary-price {
@@ -729,7 +812,8 @@
 }
 
 @media (max-width: 480px) {
-    .pd-date-grid {
+    .pd-date-grid,
+    .pd-warranty-grid {
         grid-template-columns: 1fr;
     }
 

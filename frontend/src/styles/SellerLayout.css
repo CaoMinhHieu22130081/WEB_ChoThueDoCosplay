@@ -1,0 +1,184 @@
+.seller-layout-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: #07030f;
+  color: #f8f4ff;
+}
+
+.seller-sidebar-main {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 24px 18px;
+  border-right: 1px solid rgba(20, 184, 166, 0.24);
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.2), transparent 42%),
+    #03100f;
+  display: flex;
+  flex-direction: column;
+}
+
+.seller-logo-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 8px 24px;
+  border-bottom: 1px solid rgba(20, 184, 166, 0.22);
+  margin-bottom: 22px;
+}
+
+.seller-logo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0d9488, #10b981);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 22px;
+  box-shadow: 0 0 24px rgba(20, 184, 166, 0.45);
+}
+
+.seller-logo-box h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.seller-logo-box p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #5eead4;
+}
+
+.seller-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.seller-nav-link {
+  padding: 13px 14px;
+  border-radius: 14px;
+  color: #8abfb8;
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: 0.2s ease;
+}
+
+.seller-nav-link:hover,
+.seller-nav-link.active {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.28), rgba(16, 185, 129, 0.18));
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(94, 234, 212, 0.32);
+}
+
+.seller-back-user {
+  margin-top: auto;
+  padding: 13px 14px;
+  border: 1px solid rgba(94, 234, 212, 0.28);
+  border-radius: 14px;
+  background: rgba(13, 148, 136, 0.12);
+  color: #f8f4ff;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: left;
+}
+
+.seller-back-user:hover {
+  background: rgba(13, 148, 136, 0.24);
+}
+
+.seller-main-area {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.seller-topbar {
+  min-height: 86px;
+  padding: 18px 32px;
+  border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+  background: rgba(3, 16, 15, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.seller-topbar h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #fff;
+}
+
+.seller-topbar p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #5eead4;
+}
+
+.seller-account-box {
+  padding: 10px 14px;
+  border: 1px solid rgba(94, 234, 212, 0.24);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(3, 16, 15, 0.55);
+}
+
+.seller-avatar-small {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d9488, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.seller-account-box strong {
+  display: block;
+  font-size: 14px;
+}
+
+.seller-account-box span {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #5eead4;
+}
+
+.seller-content-area {
+  padding: 28px 32px 48px;
+}
+
+@media (max-width: 900px) {
+  .seller-layout-page {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-sidebar-main {
+    position: static;
+    height: auto;
+  }
+
+  .seller-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seller-back-user {
+    margin-top: 18px;
+  }
+}

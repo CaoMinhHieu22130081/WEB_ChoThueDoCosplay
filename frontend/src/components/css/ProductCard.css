@@ -238,6 +238,7 @@
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(168, 85, 247, 0.5);
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .btn-rent:hover {

@@ -1,17 +1,27 @@
 import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { products } from '../data/products'
+import { useDemoStore } from '../context/DemoStore'
 import './ProductDetail.css'
+
+const WARRANTY_PACKAGES = [
+  { key: 'none',     label: 'Không bảo hành', fee: 0,      refundNote: 'Tự chịu trách nhiệm nếu hư hỏng.' },
+  { key: 'basic',    label: 'Cơ bản',          fee: 30000,  refundNote: 'Hoàn tối đa 80% cọc khi có hư hỏng nhẹ.' },
+  { key: 'standard', label: 'Tiêu chuẩn',      fee: 60000,  refundNote: 'Hoàn tối đa 90% cọc, bao gồm mất phụ kiện.' },
+  { key: 'premium',  label: 'Cao cấp',          fee: 100000, refundNote: 'Hoàn 100% cọc với mọi hư hỏng thông thường.' },
+]
 
 function ProductDetail() {
     const { id } = useParams()
     const navigate = useNavigate()
+    const { addToCart } = useDemoStore()
     const product = products.find((p) => String(p.id) === id)
 
     const [activeImg, setActiveImg] = useState(0)
     const [selectedSize, setSelectedSize] = useState('')
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
+    const [selectedWarranty, setSelectedWarranty] = useState('none')
     const [errors, setErrors] = useState({})
     const [added, setAdded] = useState(false)
 
@@ -25,7 +35,10 @@ function ProductDetail() {
     }
 
     const days = calcDays()
-    const totalPrice = days * (product?.pricePerDay ?? 0)
+    const unitPrice = product?.pricePerDay ?? product?.price ?? 0
+    const rentalPrice = days * unitPrice
+    const warrantyFee = WARRANTY_PACKAGES.find(w => w.key === selectedWarranty)?.fee ?? 0
+    const totalPrice = rentalPrice + warrantyFee
 
     const validate = () => {
         const e = {}
@@ -36,12 +49,30 @@ function ProductDetail() {
         return e
     }
 
+    const buildCartItem = () => ({
+        productId: product.id,
+        name: product.name,
+        image: images[0],
+        category: product.category,
+        size: selectedSize,
+        startDate,
+        endDate,
+        days,
+        pricePerDay: unitPrice,
+        rentalPrice,
+        deposit: product.deposit ?? 0,
+        warranty: selectedWarranty,
+        warrantyFee,
+        accessories: product.includes ?? [],
+    })
+
     const handleAddToCart = () => {
         const e = validate()
         if (Object.keys(e).length) { setErrors(e); return }
         setErrors({})
+        addToCart(buildCartItem())
         setAdded(true)
-        setTimeout(() => setAdded(false), 2500)
+        setTimeout(() => { setAdded(false); navigate('/cart') }, 1000)
     }
 
     /* ── not found ── */
@@ -128,7 +159,7 @@ function ProductDetail() {
                     {/* Price */}
                     <div className="pd-price-box">
                         <div className="pd-price-main">
-                            {(product.pricePerDay ?? 0).toLocaleString('vi-VN')}
+                            {unitPrice.toLocaleString('vi-VN')}
                             <span className="pd-price-unit">đ / ngày</span>
                         </div>
                         {product.pricePerWeek && (
@@ -201,11 +232,48 @@ function ProductDetail() {
                         </div>
                     </div>
 
+                    {/* Warranty picker */}
+                    <div className="pd-field-group">
+                        <label className="pd-field-label">🛡️ Gói bảo hành (tuỳ chọn)</label>
+                        <div className="pd-warranty-grid">
+                            {WARRANTY_PACKAGES.map(pkg => (
+                                <button
+                                    key={pkg.key}
+                                    type="button"
+                                    className={`pd-warranty-btn ${selectedWarranty === pkg.key ? 'active' : ''}`}
+                                    onClick={() => setSelectedWarranty(pkg.key)}
+                                >
+                                    <div className="pd-warranty-top">
+                                        <span className="pd-warranty-name">{pkg.label}</span>
+                                        {pkg.fee > 0 && (
+                                            <span className="pd-warranty-fee">+{pkg.fee.toLocaleString('vi-VN')}đ</span>
+                                        )}
+                                    </div>
+                                    <p className="pd-warranty-note">{pkg.refundNote}</p>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
                     {/* Summary */}
                     {days > 0 && (
                         <div className="pd-summary">
-                            <span>🗓 {days} ngày thuê</span>
-                            <span className="pd-summary-price">{totalPrice.toLocaleString('vi-VN')}đ</span>
+                            <div className="pd-summary-lines">
+                                <span>🗓 {days} ngày thuê</span>
+                                {warrantyFee > 0 && (
+                                    <span className="pd-summary-warranty">
+                                        🛡️ Bảo hành {WARRANTY_PACKAGES.find(w => w.key === selectedWarranty)?.label}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="pd-summary-right">
+                                {warrantyFee > 0 && (
+                                    <span className="pd-summary-breakdown">
+                                        {rentalPrice.toLocaleString('vi-VN')}đ + {warrantyFee.toLocaleString('vi-VN')}đ
+                                    </span>
+                                )}
+                                <span className="pd-summary-price">{totalPrice.toLocaleString('vi-VN')}đ</span>
+                            </div>
                         </div>
                     )}
 
@@ -219,7 +287,13 @@ function ProductDetail() {
                         </button>
                         <button
                             className="btn-pd-secondary"
-                            onClick={() => { handleAddToCart(); if (!Object.keys(validate()).length) navigate('/cart') }}
+                            onClick={() => {
+                                const e = validate()
+                                if (Object.keys(e).length) { setErrors(e); return }
+                                setErrors({})
+                                addToCart(buildCartItem())
+                                navigate('/checkout')
+                            }}
                         >
                             Đặt thuê ngay →
                         </button>
