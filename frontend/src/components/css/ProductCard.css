@@ -264,3 +264,17 @@
   .product-quick-actions { display: none; }
   .btn-rent { padding: 8px 12px; font-size: 11px; }
 }
+.action-heart.active {
+  background: linear-gradient(135deg, #ec4899, #c084fc);
+  border-color: rgba(240, 171, 252, 0.9);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.5);
+}
+
+.action-heart.active:hover {
+  background: linear-gradient(135deg, #db2777, #a855f7);
+}
+
+.action-heart.active svg {
+  fill: currentColor;
+}

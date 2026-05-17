@@ -10,7 +10,7 @@ function Cart() {
       category: 'Anime',
       price: 150000,
       quantity: 1,
-      image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&h=500&fit=crop'
+      image: 'https://myjapanclothes.com/cdn/shop/files/naruto-uzumaki-cosplay_1_grande.jpg?v=1700672027'
     },
     {
       id: 5,
@@ -18,7 +18,7 @@ function Cart() {
       category: 'Game',
       price: 200000,
       quantity: 1,
-      image: 'https://images.unsplash.com/photo-1606933248051-5ce98f1a3f3d?w=400&h=500&fit=crop'
+      image: 'https://i.redd.it/my-carian-knights-cosplay-v0-r51emmgjx98e1.jpg?width=1152&format=pjpg&auto=webp&s=8c999b11e10a34df0bd31e9853df2377af964364'
     }
   ])
 
